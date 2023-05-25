@@ -1,0 +1,18 @@
+<div>
+<h2>Book detail</h2>
+
+  <%= link_to controller: 'users', action: 'show' do %>
+  <%= image_tag @book.user.get_profile_image(100,100) %>
+  <p>ユーザーネーム：<%= @book.user.name %></p>
+   <% end %>
+   
+  <%= link_to  do %>
+  <%= @book.title %>
+  <% end %>
+  
+  <p>説明：<%= @book.body %></p>
+    <% if @book.user == current_user %>
+    <%= link_to "Edit", edit_book_path(@book.id) %>
+    <%= link_to "Destroy", book_path(@book), method: :delete %>
+  <% end %>
+</div>
