@@ -12,6 +12,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book.id)
     else
       @books = Book.all
+      @user = current_user
       render :index
     end
   end
@@ -19,6 +20,7 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
     @book = Book.new
+    @user = current_user
   end
   
   def destroy
@@ -29,10 +31,17 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id]) 
+    @user = @book.user
+    @list = Book.new
   end
 
   def edit
     @book = Book.find(params[:id])
+     if @book.user == current_user
+        render :edit
+     else
+     redirect_to books_path
+     end
   end
   
   def update
